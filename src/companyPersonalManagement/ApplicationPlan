@@ -1,0 +1,58 @@
+Company Personal Management
+
+Цель: Создать комплексную систему для управления сотрудниками и отделами компании.
+
+Задачи:
+
+Создать классы Employee (с информацией о имени, фамилии, должности и отделе) и
+Department (с информацией о названии отдела и списке сотрудников).
+
+Реализовать класс Company, который использует коллекцию для хранения отделов, где ключом является
+ название отдела, а значением - объект Department.
+
+В классе Company реализовать операции CRUD для сотрудников и отделов, включая перевод сотрудников между
+отделами, обновление информации о сотрудниках и отделах, поиск сотрудников
+по различным критериям (отдел, должность, имя).
+
+Добавить функционал для вывода отчетов, например, список всех сотрудников компании, сотрудники
+определенного отдела, количество сотрудников в компании.
+
+entities
+
+Employee
+private Integer personalId;
+private String firstName;
+private String lastName;
+private String position;  "Enum positions"? setter
+private String departmentName;  "Enum department's names"? setter
+
+Department
+
+private String departmentName;
+private List<Employee> departmentPersonal;
+
+void addNewEmployee(Employee employee); Dep.Service?
+void removeEmployee(Employee employee); Dep.Service?
+
+repositories
+
+EmployeesRepository implements PersonalRepositoryInterface
+
+Map<Integer, Employee> wholePersonal;
+
+Integer generateId(newEmployeeDto);
+void addNewEmployee(Integer id);
+Employee findEmployeeBzId(Integer id)
+Employee findEmployeeByLastName(String LastName)
+List<Employee> findEmployeesByPosition(String Position) "Enum positions"?
+void employeeLayOff(employeeId);
+
+DepartmentsRepository implements DepartmentsInterface
+
+Map<String, Department> companyDepartments;
+
+List<Employee> findDepartmentsEmployees(String departmentsName);
+void transferEmployee(Employee employee, Department newDepartment);
+
+
+
