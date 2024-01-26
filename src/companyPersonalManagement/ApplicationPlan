@@ -26,21 +26,30 @@ private String lastName;
 private String position;  "Enum positions"? setter
 private String departmentName;  "Enum department's names"? setter
 
+EmployeeService
+
+void changeEmployeesPosition(Employee employee, String newPosition);
+void changeEmployeesDepartment(Employee employee, String newDepartmentName);
+
 Department
 
 private String departmentName;
 private List<Employee> departmentPersonal;
 
-void addNewEmployee(Employee employee); Dep.Service?
-void removeEmployee(Employee employee); Dep.Service?
+DepartmentService
+
+void addNewEmployee(Employee employee);
+void excludeEmployee(Employee employee);
 
 repositories
 
 EmployeesRepository implements PersonalRepositoryInterface
 
-Map<Integer, Employee> wholePersonal;
+private Integer idCounter;
+Map<Integer, Employee> wholePersonalById;
 
-Integer generateId(newEmployeeDto);
+
+Integer generateId(newEmployeeDto); Create new Object Employee
 void addNewEmployee(Integer id);
 Employee findEmployeeBzId(Integer id)
 Employee findEmployeeByLastName(String LastName)
@@ -54,5 +63,100 @@ Map<String, Department> companyDepartments;
 List<Employee> findDepartmentsEmployees(String departmentsName);
 void transferEmployee(Employee employee, Department newDepartment);
 
+companyServices
 
+CompanyService
 
+AddEmployeeDto addEmployee(NewEmployeeDto newEmployeeDto);
+LayOffDto layOffEmployee(Integer id);
+EmployeeTransferDto employeeTransfer(Integer id, Department newDepartment);
+EmployeeDto findEmployeeById(Integer Id);
+EmployeesDto findEmployeeByName(String lastName);
+FindEmployeesByCriteriaDto findEmployeesByDep(String criteria);
+ModifyEmployeesDataDto modifyPersonalData(EmployeeDto newEmployeeData);
+
+dtos
+
+  errors
+     ErrorCoding
+     ErrorDto
+
+ AddEmployeeDto
+
+   String message;
+   private List<ErrorsDto> errors;
+
+ LayOffDto
+   String message;
+   private List<ErrorsDto> errors;
+
+ EmployeeTransferDto
+   String message;
+   private List<ErrorsDto> errors;
+
+ newEmployeeDto
+  private String firstName;
+  private String lastName;
+  private String position;
+  private String departmentName;
+  private List<ErrorsDto> errors;
+
+ EmployeeDto
+   private Integer id;
+   private String firstName;
+   private String lastName;
+   private String position;
+   private String departmentName;
+   private List<ErrorsDto> errors;
+
+ FindEmployeesByCriteriaDto
+
+  private String criteria;
+  private List<EmployeeDto> employees;
+  private List<ErrorsDto> errors;
+
+ ModifyPersonalData
+
+ String message;
+ private List<ErrorsDto> errors;
+
+ userInterface
+
+ MenuCommandsInterface
+
+  void executeCommand();
+  String menuName();
+
+ AddNewEmployeeMenu;
+
+   void executeCommand();
+   String menuName();
+
+ FindEmployeeByNameMenu
+
+   void executeCommand();
+   String menuName();
+
+ FindEmployeeByIdMenu
+
+    void executeCommand();
+    String menuName();
+
+ FindEmployeesByCriteriaMenu
+
+    void executeCommand();
+    String menuName();
+
+ ModifyPersonalDataMenu
+
+   void executeCommand();
+   String menuName();
+
+ ExitMenu
+
+  void executeCommand();
+  String menuName();
+
+  UserMenu
+
+CompanyApp
