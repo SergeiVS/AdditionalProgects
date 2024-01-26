@@ -50,7 +50,7 @@ Map<Integer, Employee> wholePersonalById;
 
 
 Integer generateId(newEmployeeDto); Create new Object Employee
-void addNewEmployee(Integer id);
+void addNewEmployee(Integer id, EmployeeDto employeeDto);
 Employee findEmployeeBzId(Integer id)
 Employee findEmployeeByLastName(String LastName)
 List<Employee> findEmployeesByPosition(String Position) "Enum positions"?
