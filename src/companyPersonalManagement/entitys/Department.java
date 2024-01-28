@@ -11,4 +11,12 @@ public class Department {
         this.departmentName = departmentName;
         departmentPersonal = new LinkedList<>();
     }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public List<Employee> getDepartmentPersonal() {
+        return departmentPersonal;
+    }
 }

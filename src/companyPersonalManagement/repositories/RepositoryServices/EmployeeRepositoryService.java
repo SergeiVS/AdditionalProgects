@@ -35,7 +35,7 @@ public class EmployeeRepositoryService implements EmployeeRepositoryInterface {
     }
 
     @Override
-    public List<Employee> findEmployeeByCriteria(String lastName) {
+    public List<Employee> findEmployeeByLastname(String lastName) {
         List<Employee> employees = new ArrayList<>();
         Map<Integer, Employee> employeeMap = eRepository.getWholeEmployeesRepository();
 
