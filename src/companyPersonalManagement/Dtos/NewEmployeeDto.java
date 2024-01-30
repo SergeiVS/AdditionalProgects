@@ -1,28 +1,27 @@
 package companyPersonalManagement.Dtos;
 
-public class NewEmployeeDto {
-private final String firstName;
+import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
 
-private final String lastName;
+import java.util.List;
+
+public class NewEmployeeDto extends EmployeeDto {
 
     public NewEmployeeDto(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(firstName, lastName);
     }
 
+    @Override
     public String getFirstName() {
-        return firstName;
+        return super.getFirstName();
     }
 
+    @Override
     public String getLastName() {
-        return lastName;
+        return super.getLastName();
     }
 
     @Override
     public String toString() {
-        return "NewEmployeeDto{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return super.toString();
     }
 }

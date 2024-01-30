@@ -1,6 +1,7 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
 import companyPersonalManagement.Dtos.NewEmployeeDto;
+
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.EmployeeRepository;
 import companyPersonalManagement.repositories.EmployeeRepositoryInterface;
@@ -41,7 +42,7 @@ public class EmployeeRepositoryService implements EmployeeRepositoryInterface {
 
         for (Map.Entry<Integer, Employee> entry : employeeMap.entrySet()) {
             String entryLastName = entry.getValue().getLastName();
-            if (entryLastName.equals(lastName)){
+            if (entryLastName.equals(lastName)) {
                 employees.add(entry.getValue());
             }
         }
@@ -56,7 +57,7 @@ public class EmployeeRepositoryService implements EmployeeRepositoryInterface {
 
         for (Map.Entry<Integer, Employee> entry : employeeMap.entrySet()) {
             String entryPosition = entry.getValue().getPosition();
-            if (entryPosition.equals(position)){
+            if (entryPosition.equals(position)) {
                 employees.add(entry.getValue());
             }
         }
