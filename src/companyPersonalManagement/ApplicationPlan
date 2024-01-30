@@ -97,8 +97,8 @@ dtos
  newEmployeeDto
   private String firstName;
   private String lastName;
-  private String position;
-  private String departmentName;
+  //private String position;
+  //private String departmentName;
   private List<ErrorsDto> errors;
 
  EmployeeDto

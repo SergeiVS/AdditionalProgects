@@ -1,9 +1,9 @@
 package companyPersonalManagement.Dtos;
 
 public class NewEmployeeDto {
-private String firstName;
+private final String firstName;
 
-private String lastName;
+private final String lastName;
 
     public NewEmployeeDto(String firstName, String lastName) {
         this.firstName = firstName;

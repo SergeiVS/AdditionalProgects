@@ -1,7 +1,7 @@
 package companyPersonalManagement.Dtos;
 
 public class NewDepartmentDto {
-    private String departmentName;
+    private final String departmentName;
     public NewDepartmentDto(String departmentName) {
         this.departmentName = departmentName;
     }
