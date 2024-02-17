@@ -1,10 +1,6 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.requestDtos;
 
-import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
-
-import java.util.List;
-
-abstract class DepartmentDto {
+public class DepartmentDto extends Request {
     private final String departmentName;
 
     public DepartmentDto(String departmentName) {

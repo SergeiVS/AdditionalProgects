@@ -1,11 +1,12 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.responseDtos;
 
-import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
+import companyPersonalManagement.dtos.errorsDto.ErrorDto;
+import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 import companyPersonalManagement.entitys.Employee;
 
 import java.util.List;
 
-public class PresentDepartmentDto extends DepartmentDto{
+public class PresentDepartmentDto extends DepartmentDto {
 
     private final List<Employee> employees;
     private final List<ErrorDto> errors;

@@ -1,7 +1,6 @@
 package companyPersonalManagement.repositories;
 
-import companyPersonalManagement.Dtos.NewDepartmentDto;
-import companyPersonalManagement.entitys.Department;
+import companyPersonalManagement.dtos.requestDtos.NewDepartmentDto;
 import companyPersonalManagement.entitys.Employee;
 
 import java.util.List;
@@ -15,6 +14,6 @@ public interface DepartmentRepositoryInterface {
 
     List<Employee> findAllDepartmentEmployees(String departmentName);
 
-    List<Employee> findDepartmentEmployeesBzPosition(String departmentName,String position);
+    List<Employee> findDepartmentEmployeesByPosition(String departmentName, String position);
 
  }

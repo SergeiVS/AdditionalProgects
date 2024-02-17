@@ -1,6 +1,6 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.requestDtos;
 
-abstract class EmployeeDto {
+public class EmployeeDto extends Request{
     private String firstName;
     private String lastName;
 

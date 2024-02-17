@@ -1,6 +1,6 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
-import companyPersonalManagement.Dtos.NewDepartmentDto;
+import companyPersonalManagement.dtos.requestDtos.NewDepartmentDto;
 import companyPersonalManagement.entitys.Department;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.DepartmentRepository;
@@ -8,11 +8,10 @@ import companyPersonalManagement.repositories.DepartmentRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DepartmentRepositoryService implements DepartmentRepositoryInterface {
 
-    DepartmentRepository dRepository = new DepartmentRepository();
+    private final DepartmentRepository dRepository = new DepartmentRepository();
 
     @Override
     public void addNewDepartment(NewDepartmentDto newDepartmentDto) {
@@ -53,7 +52,7 @@ public class DepartmentRepositoryService implements DepartmentRepositoryInterfac
     }
 
     @Override
-    public List<Employee> findDepartmentEmployeesBzPosition(String departmentName,String position) {
+    public List<Employee> findDepartmentEmployeesByPosition(String departmentName, String position) {
 
         List<Employee> employeesByPosition = new ArrayList<>();
         Department department = dRepository.getDepartmentsRepository().get(departmentName);

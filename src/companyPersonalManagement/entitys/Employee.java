@@ -1,5 +1,7 @@
 package companyPersonalManagement.entitys;
 
+import java.util.Objects;
+
 public class Employee {
 
     private Integer personalId;
@@ -40,6 +42,18 @@ public class Employee {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee employee)) return false;
+        return Objects.equals(getPersonalId(), employee.getPersonalId()) && Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getPosition(), employee.getPosition()) && Objects.equals(getDepartmentName(), employee.getDepartmentName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPersonalId(), getFirstName(), getLastName(), getPosition(), getDepartmentName());
     }
 
     @Override

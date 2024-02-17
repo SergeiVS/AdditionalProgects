@@ -1,12 +1,12 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.responseDtos;
 
-import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
+import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.entitys.Employee;
 
 import java.util.List;
 
 public class EmployeeListDto {
-    List<Employee>employees;
+    List<Employee> employees;
     List<ErrorDto> errors;
 
     public EmployeeListDto(List<Employee> employees, List<ErrorDto> errors) {

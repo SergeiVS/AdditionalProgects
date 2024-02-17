@@ -1,10 +1,8 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.requestDtos;
 
-import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
+import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
 
-import java.util.List;
-
-public class NewEmployeeDto extends EmployeeDto {
+public class NewEmployeeDto extends EmployeeDto{
 
     public NewEmployeeDto(String firstName, String lastName) {
         super(firstName, lastName);

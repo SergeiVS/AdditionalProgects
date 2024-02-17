@@ -1,6 +1,7 @@
-package companyPersonalManagement.Dtos;
+package companyPersonalManagement.dtos.responseDtos;
 
-import companyPersonalManagement.Dtos.ErrorsDto.ErrorDto;
+import companyPersonalManagement.dtos.errorsDto.ErrorDto;
+import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
 
 import java.util.List;
 

@@ -5,21 +5,21 @@ import companyPersonalManagement.entitys.Employee;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EmployeeRepository{
+public class EmployeeRepository {
 
     private int counter = 0;
-    private final Map<Integer, Employee> wholeEmployeesRepository;
+    private final Map<Integer, Employee> employeesRepository;
 
     public EmployeeRepository() {
-        wholeEmployeesRepository = new HashMap<>();
+        employeesRepository = new HashMap<>();
     }
 
-    public Integer idGenerator(){
+    public Integer idGenerator() {
         return counter++;
     }
 
-    public Map<Integer, Employee> getWholeEmployeesRepository() {
-        return wholeEmployeesRepository;
+    public Map<Integer, Employee> getEmployeesRepository() {
+        return employeesRepository;
     }
 
 

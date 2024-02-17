@@ -1,6 +1,6 @@
 package companyPersonalManagement.repositories;
 
-import companyPersonalManagement.Dtos.NewEmployeeDto;
+import companyPersonalManagement.dtos.requestDtos.NewEmployeeDto;
 
 import companyPersonalManagement.entitys.Employee;
 
