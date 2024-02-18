@@ -11,7 +11,7 @@ public interface EmployeeRepositoryInterface {
     void employeeLayOff(Integer id);
     Employee findEmployeeById(Integer id);
    List<Employee> findEmployeeByLastname(String lastName);
-   List<Employee> findEmployeesByPosition(String Position);
+
 
    Integer wholePersonalCount();
 

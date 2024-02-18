@@ -50,19 +50,4 @@ public class DepartmentRepositoryService implements DepartmentRepositoryInterfac
 
         return dRepository.getDepartmentsRepository().get(departmentName).getDepartmentPersonal();
     }
-
-    @Override
-    public List<Employee> findDepartmentEmployeesByPosition(String departmentName, String position) {
-
-        List<Employee> employeesByPosition = new ArrayList<>();
-        Department department = dRepository.getDepartmentsRepository().get(departmentName);
-
-        for (Employee employee : department.getDepartmentPersonal()) {
-            if (employee.getPosition().equals(position)){
-                employeesByPosition.add(employee);
-            }
-            return employeesByPosition;
-        }
-        return null;
-    }
 }

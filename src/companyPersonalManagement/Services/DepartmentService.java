@@ -4,7 +4,12 @@ import companyPersonalManagement.dtos.errorsDto.ErrorCodes;
 import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 
-import companyPersonalManagement.dtos.responseDtos.AddNewUnitDto;
+import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
+import companyPersonalManagement.dtos.responseDtos.AddRemoveUnitDto;
+import companyPersonalManagement.dtos.responseDtos.PresentDepartmentDto;
+import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
+import companyPersonalManagement.entitys.Department;
+import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.DepartmentRepository;
 import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
 
@@ -20,7 +25,70 @@ public class DepartmentService {
         this.repository = repository;
     }
 
-    Validation newDepValidation = new Validation() {
+    public PresentDepartmentDto findDepartment(DepartmentDto dto){
+        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dto);
+        if (errors.isEmpty()){
+            String name = dto.getDepartmentName();
+            Department department = repository.getDepartmentsRepository().get(name);
+            List<Employee> employees = department.getDepartmentPersonal();
+            return new PresentDepartmentDto(name, employees, errors);
+        }else {
+            return new PresentDepartmentDto("-", new ArrayList<>(), errors);
+        }
+    }
+    public AddRemoveUnitDto removeDepartment(DepartmentDto dto) {
+        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dto);
+
+        if (errors.isEmpty()) {
+            String name = dto.getDepartmentName();
+            repository.getDepartmentsRepository().remove(name);
+            return new AddRemoveUnitDto("Department " + name + " successful removed.", errors);
+        } else {
+            return new AddRemoveUnitDto("Department did not removed.", errors);
+        }
+    }
+
+    public AddRemoveUnitDto addNewDepartment(DepartmentDto dto) {
+
+        List<ErrorDto> errors = newDepValidationInterface.validate(dto);
+
+        String name;
+        if (errors.isEmpty()) {
+            service.addNewDepartment(dto);
+            return new AddRemoveUnitDto("Department was added successful", errors);
+        } else {
+            return new AddRemoveUnitDto("Error, department did not added", errors);
+        }
+    }
+
+    public PresentEmployeeDto addEmployeeToDep (PresentDepartmentDto dDto, Employee employee){
+        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dDto);
+        if (errors.isEmpty()) {
+            String dName = dDto.getDepartmentName();
+            Department department = repository.getDepartmentsRepository().get(dName);
+            employee.setDepartmentName(dName);
+            department.getDepartmentPersonal().add(employee);
+            return new PresentEmployeeDto(employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.getDepartmentName(), errors);
+        }else {
+            return new PresentEmployeeDto("-","-","-","-",errors);
+        }
+    }
+    public PresentEmployeeDto removeEmployeeFromDep (PresentDepartmentDto dDto, Employee employee){
+        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dDto);
+        if (errors.isEmpty()) {
+            String dName = dDto.getDepartmentName();
+            Department department = repository.getDepartmentsRepository().get(dName);
+            employee.setDepartmentName(dName);
+            department.getDepartmentPersonal().remove(employee);
+            return new PresentEmployeeDto(employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
+        }else {
+            return new PresentEmployeeDto("-","-","-","-",errors);
+        }
+    }
+
+
+
+    ValidationInterface newDepValidationInterface = new ValidationInterface() {
         @Override
         public List<ErrorDto> validate(Object request) {
             List<ErrorDto> error = new ArrayList<>();
@@ -52,16 +120,34 @@ public class DepartmentService {
         }
     };
 
-    public AddNewUnitDto addNewDepartment(DepartmentDto dto) {
-        List<ErrorDto> errors = newDepValidation.validate(dto);
-        if (errors.isEmpty()) {
-            service.addNewDepartment(dto);
-            return new AddNewUnitDto("Department was added successful", errors);
-        } else {
-            return new AddNewUnitDto("Error, department did not added", errors);
+
+
+    ValidationInterface presentDepNameValidationInterface = new ValidationInterface() {
+        @Override
+        public List<ErrorDto> validate(Object request) {
+            List<ErrorDto> errors = new ArrayList<>();
+            DepartmentDto dto;
+            String name;
+
+            if (request == null) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "Request should not be empty"));
+                return errors;
+            } else {
+                try {
+                    dto = (DepartmentDto) request;
+                    name = dto.getDepartmentName();
+                } catch (Exception e) {
+                    errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
+                    return errors;
+                }
+            }
+
+            if (repository.getDepartmentsRepository().containsKey(name)) {
+                return errors;
+            } else {
+                return errors;
+            }
         }
-    }
-
-
+    };
 }
 

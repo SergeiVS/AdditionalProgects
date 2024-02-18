@@ -46,23 +46,6 @@ public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
         }
         return employees;
     }
-
-    @Override
-    public List<Employee> findEmployeesByPosition(String position) {
-
-        List<Employee> employees = new ArrayList<>();
-        Map<Integer, Employee> employeeMap = eRepository.getEmployeesRepository();
-
-        for (Map.Entry<Integer, Employee> entry : employeeMap.entrySet()) {
-            String entryPosition = entry.getValue().getPosition();
-            if (entryPosition.equals(position)) {
-                employees.add(entry.getValue());
-            }
-        }
-        return employees;
-
-    }
-
     @Override
     public Integer wholePersonalCount() {
 

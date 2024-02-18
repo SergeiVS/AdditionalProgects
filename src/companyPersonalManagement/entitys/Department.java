@@ -1,5 +1,6 @@
 package companyPersonalManagement.entitys;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,7 @@ public class Department {
 
     public Department(String departmentName) {
         this.departmentName = departmentName;
-        departmentPersonal = new LinkedList<>();
+        departmentPersonal = new ArrayList<>();
     }
 
     public String getDepartmentName() {
