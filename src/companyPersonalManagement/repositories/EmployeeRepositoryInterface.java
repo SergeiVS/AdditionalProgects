@@ -13,6 +13,7 @@ public interface EmployeeRepositoryInterface {
 
     Employee setEmployeePosition(Integer id, String position);
     Employee findEmployeeById(Integer id);
+    List<Employee> findAllEmployees();
    List<Employee> findEmployeeByLastname(String lastName);
 
 
