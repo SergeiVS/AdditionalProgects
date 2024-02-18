@@ -1,6 +1,7 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
 import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
+import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.EmployeeRepository;
 import companyPersonalManagement.repositories.EmployeeRepositoryInterface;
@@ -13,7 +14,7 @@ public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
     private final EmployeeRepository eRepository = new EmployeeRepository();
 
     @Override
-    public void addNewEmployee(EmployeeDto employeeDto) {
+    public Employee addNewEmployee(EmployeeDto employeeDto) {
 
         Integer id = eRepository.idGenerator();
         String lastName = employeeDto.getLastName();
@@ -21,11 +22,21 @@ public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
 
         Employee employee = new Employee(id, lastName, firstName);
         eRepository.getEmployeesRepository().put(id, employee);
+        return employee;
     }
 
     @Override
-    public void employeeLayOff(Integer id) {
+    public Employee employeeLayOff(Integer id) {
+        Employee employee = eRepository.getEmployeesRepository().get(id);
         eRepository.getEmployeesRepository().remove(id);
+        return employee;
+    }
+
+    @Override
+    public Employee setEmployeePosition(Integer id, String position) {
+        Employee employee = eRepository.getEmployeesRepository().get(id);
+        employee.setPosition(position);
+        return employee;
     }
 
     @Override
