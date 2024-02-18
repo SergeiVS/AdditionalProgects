@@ -64,7 +64,6 @@ public class EmployeeService {
         List<ErrorDto> errors = validateId.validate(id);
         if (errors.isEmpty()) {
             Employee employee = service.findEmployeeById(id);
-            Integer id = employee.getPersonalId();
             String fName = employee.getFirstName();
             String lName = employee.getLastName();
             String position = employee.getPosition();
@@ -96,8 +95,8 @@ public class EmployeeService {
         List<PresentEmployeeDto> employeeDtos = new ArrayList<>();
 
         if (employeeList.isEmpty()) {
-            errors.add(new ErrorDto(ErrorCodes.ER407, "Name not found"))
-            employeeDtos.add(new PresentEmployeeDto(0, "-", "-", "-", "-", new ArrayList<ErrorDto>()))
+            errors.add(new ErrorDto(ErrorCodes.ER407, "Name not found"));
+            employeeDtos.add(new PresentEmployeeDto(0, "-", "-", "-", "-", new ArrayList<ErrorDto>()));
             return employeeDtos;
         } else {
 
