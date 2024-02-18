@@ -14,6 +14,7 @@ import companyPersonalManagement.repositories.DepartmentRepository;
 import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class DepartmentService {
@@ -68,9 +69,10 @@ public class DepartmentService {
             Department department = repository.getDepartmentsRepository().get(dName);
             employee.setDepartmentName(dName);
             department.getDepartmentPersonal().add(employee);
-            return new PresentEmployeeDto(employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.getDepartmentName(), errors);
+            Integer id = employee.getPersonalId();
+            return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.getDepartmentName(), errors);
         }else {
-            return new PresentEmployeeDto("-","-","-","-",errors);
+            return new PresentEmployeeDto(0, "-","-","-","-",errors);
         }
     }
     public PresentEmployeeDto removeEmployeeFromDep (PresentDepartmentDto dDto, Employee employee){
@@ -80,9 +82,10 @@ public class DepartmentService {
             Department department = repository.getDepartmentsRepository().get(dName);
             employee.setDepartmentName(dName);
             department.getDepartmentPersonal().remove(employee);
-            return new PresentEmployeeDto(employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
+            Integer id = employee.getPersonalId();
+            return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
         }else {
-            return new PresentEmployeeDto("-","-","-","-",errors);
+            return new PresentEmployeeDto(0,"-","-","-","-",errors);
         }
     }
     public EmployeeListDto findDepEmployees(DepartmentDto dto){
@@ -98,9 +101,9 @@ public class DepartmentService {
 
 
 
-    ValidationInterface newDepValidation = new ValidationInterface() {
+    ValidationInterface<DepartmentDto> newDepValidation = new ValidationInterface<DepartmentDto>() {
         @Override
-        public List<ErrorDto> validate(Object request) {
+        public List<ErrorDto> validate(DepartmentDto request) {
             List<ErrorDto> error = new ArrayList<>();
             DepartmentDto dto;
             String name;
@@ -132,9 +135,9 @@ public class DepartmentService {
 
 
 
-    ValidationInterface presentDepNameValidation = new ValidationInterface() {
+    ValidationInterface<DepartmentDto> presentDepNameValidation = new ValidationInterface<DepartmentDto>() {
         @Override
-        public List<ErrorDto> validate(Object request) {
+        public List<ErrorDto> validate(DepartmentDto request) {
             List<ErrorDto> errors = new ArrayList<>();
             DepartmentDto dto;
             String name;

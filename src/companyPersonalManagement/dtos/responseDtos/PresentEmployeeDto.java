@@ -7,14 +7,15 @@ import java.util.List;
 
 public class PresentEmployeeDto extends EmployeeDto {
 
-
+private final Integer personalId;
     private final String position;
     private final String departmentName;
 
     private final List<ErrorDto> errorDtos;
 
-    public PresentEmployeeDto(String firstName, String lastName, String position, String departmentName, List<ErrorDto> errorDtos) {
+    public PresentEmployeeDto(Integer personalId, String firstName, String lastName, String position, String departmentName, List<ErrorDto> errorDtos) {
         super(firstName, lastName);
+        this.personalId = personalId;
         this.position = position;
         this.departmentName = departmentName;
         this.errorDtos = errorDtos;
@@ -36,6 +37,10 @@ public class PresentEmployeeDto extends EmployeeDto {
 
     public String getDepartmentName() {
         return departmentName;
+    }
+
+    public Integer getPersonalId() {
+        return personalId;
     }
 
     public List<ErrorDto> getErrorDtos() {

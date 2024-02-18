@@ -7,7 +7,6 @@ import companyPersonalManagement.entitys.Employee;
 import java.util.List;
 
 public class PresentDepartmentDto extends DepartmentDto {
-
     private final List<Employee> employees;
     private final List<ErrorDto> errors;
 
