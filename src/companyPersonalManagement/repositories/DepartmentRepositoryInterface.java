@@ -1,12 +1,12 @@
 package companyPersonalManagement.repositories;
 
-import companyPersonalManagement.dtos.requestDtos.NewDepartmentDto;
+import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 import companyPersonalManagement.entitys.Employee;
 
 import java.util.List;
 
 public interface DepartmentRepositoryInterface {
-    void addNewDepartment(NewDepartmentDto newDepartmentDto);
+    void addNewDepartment(DepartmentDto DepartmentDto);
     void removeDepartment(String departmentName);
     void addEmployeeToDepartment(String departmentName, Employee employee);
 

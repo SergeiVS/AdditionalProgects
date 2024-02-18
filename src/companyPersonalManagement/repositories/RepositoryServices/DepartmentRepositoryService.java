@@ -1,6 +1,6 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
-import companyPersonalManagement.dtos.requestDtos.NewDepartmentDto;
+import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 import companyPersonalManagement.entitys.Department;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.DepartmentRepository;
@@ -14,9 +14,9 @@ public class DepartmentRepositoryService implements DepartmentRepositoryInterfac
     private final DepartmentRepository dRepository = new DepartmentRepository();
 
     @Override
-    public void addNewDepartment(NewDepartmentDto newDepartmentDto) {
+    public void addNewDepartment(DepartmentDto DepartmentDto) {
 
-        String name = newDepartmentDto.getDepartmentName();
+        String name = DepartmentDto.getDepartmentName();
         Department department = new Department(name);
         dRepository.getDepartmentsRepository().put(name, department);
     }

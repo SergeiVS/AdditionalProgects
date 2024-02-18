@@ -1,6 +1,6 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
-import companyPersonalManagement.dtos.requestDtos.NewEmployeeDto;
+import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.EmployeeRepository;
 import companyPersonalManagement.repositories.EmployeeRepositoryInterface;
@@ -13,11 +13,11 @@ public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
     private final EmployeeRepository eRepository = new EmployeeRepository();
 
     @Override
-    public void addNewEmployee(NewEmployeeDto newEmployeeDto) {
+    public void addNewEmployee(EmployeeDto employeeDto) {
 
         Integer id = eRepository.idGenerator();
-        String lastName = newEmployeeDto.getLastName();
-        String firstName = newEmployeeDto.getFirstName();
+        String lastName = employeeDto.getLastName();
+        String firstName = employeeDto.getFirstName();
 
         Employee employee = new Employee(id, lastName, firstName);
         eRepository.getEmployeesRepository().put(id, employee);

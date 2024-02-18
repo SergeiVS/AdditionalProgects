@@ -3,7 +3,6 @@ package companyPersonalManagement.Services;
 import companyPersonalManagement.dtos.errorsDto.ErrorCodes;
 import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
-import companyPersonalManagement.dtos.requestDtos.NewDepartmentDto;
 
 import companyPersonalManagement.dtos.responseDtos.AddNewUnitDto;
 import companyPersonalManagement.repositories.DepartmentRepository;
@@ -53,7 +52,7 @@ public class DepartmentService {
         }
     };
 
-    public AddNewUnitDto addNewDepartment(NewDepartmentDto dto) {
+    public AddNewUnitDto addNewDepartment(DepartmentDto dto) {
         List<ErrorDto> errors = newDepValidation.validate(dto);
         if (errors.isEmpty()) {
             service.addNewDepartment(dto);
@@ -62,6 +61,7 @@ public class DepartmentService {
             return new AddNewUnitDto("Error, department did not added", errors);
         }
     }
+
 
 }
 
