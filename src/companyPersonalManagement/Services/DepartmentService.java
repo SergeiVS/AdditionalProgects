@@ -4,8 +4,8 @@ import companyPersonalManagement.dtos.errorsDto.ErrorCodes;
 import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 
-import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
 import companyPersonalManagement.dtos.responseDtos.AddRemoveUnitDto;
+import companyPersonalManagement.dtos.responseDtos.EmployeeListDto;
 import companyPersonalManagement.dtos.responseDtos.PresentDepartmentDto;
 import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Department;
@@ -26,7 +26,7 @@ public class DepartmentService {
     }
 
     public PresentDepartmentDto findDepartment(DepartmentDto dto){
-        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dto);
+        List<ErrorDto> errors = presentDepNameValidation.validate(dto);
         if (errors.isEmpty()){
             String name = dto.getDepartmentName();
             Department department = repository.getDepartmentsRepository().get(name);
@@ -37,7 +37,7 @@ public class DepartmentService {
         }
     }
     public AddRemoveUnitDto removeDepartment(DepartmentDto dto) {
-        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dto);
+        List<ErrorDto> errors = presentDepNameValidation.validate(dto);
 
         if (errors.isEmpty()) {
             String name = dto.getDepartmentName();
@@ -50,7 +50,7 @@ public class DepartmentService {
 
     public AddRemoveUnitDto addNewDepartment(DepartmentDto dto) {
 
-        List<ErrorDto> errors = newDepValidationInterface.validate(dto);
+        List<ErrorDto> errors = newDepValidation.validate(dto);
 
         String name;
         if (errors.isEmpty()) {
@@ -62,7 +62,7 @@ public class DepartmentService {
     }
 
     public PresentEmployeeDto addEmployeeToDep (PresentDepartmentDto dDto, Employee employee){
-        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dDto);
+        List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
         if (errors.isEmpty()) {
             String dName = dDto.getDepartmentName();
             Department department = repository.getDepartmentsRepository().get(dName);
@@ -74,7 +74,7 @@ public class DepartmentService {
         }
     }
     public PresentEmployeeDto removeEmployeeFromDep (PresentDepartmentDto dDto, Employee employee){
-        List<ErrorDto> errors = presentDepNameValidationInterface.validate(dDto);
+        List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
         if (errors.isEmpty()) {
             String dName = dDto.getDepartmentName();
             Department department = repository.getDepartmentsRepository().get(dName);
@@ -85,10 +85,20 @@ public class DepartmentService {
             return new PresentEmployeeDto("-","-","-","-",errors);
         }
     }
+    public EmployeeListDto findDepEmployees(DepartmentDto dto){
+        List<ErrorDto> errors = presentDepNameValidation.validate(dto);
+        if(errors.isEmpty()){
+            Department department = repository.getDepartmentsRepository().get(dto.getDepartmentName());
+            List<Employee> employees = department.getDepartmentPersonal();
+            return new EmployeeListDto(employees, errors);
+        }else {
+            return new EmployeeListDto(new ArrayList<>(), errors);
+        }
+    }
 
 
 
-    ValidationInterface newDepValidationInterface = new ValidationInterface() {
+    ValidationInterface newDepValidation = new ValidationInterface() {
         @Override
         public List<ErrorDto> validate(Object request) {
             List<ErrorDto> error = new ArrayList<>();
@@ -122,7 +132,7 @@ public class DepartmentService {
 
 
 
-    ValidationInterface presentDepNameValidationInterface = new ValidationInterface() {
+    ValidationInterface presentDepNameValidation = new ValidationInterface() {
         @Override
         public List<ErrorDto> validate(Object request) {
             List<ErrorDto> errors = new ArrayList<>();
