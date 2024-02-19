@@ -60,7 +60,7 @@ public class UI {
                             employeeForLayOff = employeeService.layOffEmployee(employeeForLayOff);
                             PrintDtos.printPresentEmployee(employeeForLayOff);
                         case 3:
-                            List<PresentEmployeeDto> employees = employeeService.findAllEmployees();
+                            EmployeeListDto employees = employeeService.findAllEmployees();
                             PrintDtos.printEmployeesDtoList(employees);
                         case 4:
                             int idToFind = UserInput.inputInt("Insert needed id");
@@ -68,7 +68,7 @@ public class UI {
                             PrintDtos.printPresentEmployee(employeeFound);
                         case 5:
                             String name = UserInput.inputString("Insert lastname");
-                            List<PresentEmployeeDto> employeesByName = employeeService.findEmployeesByLastName(name);
+                            EmployeeListDto employeesByName = employeeService.findEmployeesByLastName(name);
                             PrintDtos.printEmployeesDtoList(employeesByName);
                         case 6:
                             int countOfEmployees = employeeService.findWholeEmployeesCount();

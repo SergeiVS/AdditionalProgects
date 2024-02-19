@@ -4,6 +4,7 @@ package companyPersonalManagement.Services;
 import companyPersonalManagement.dtos.errorsDto.ErrorCodes;
 import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
+import companyPersonalManagement.dtos.responseDtos.EmployeeListDto;
 import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.EmployeeRepository;
@@ -75,7 +76,7 @@ public class EmployeeService {
         }
     }
 
-    public List<PresentEmployeeDto> findAllEmployees() {
+    public EmployeeListDto findAllEmployees() {
         List<PresentEmployeeDto> employeeDtos = new ArrayList<>();
         List<Employee> employees = service.findAllEmployees();
         for (Employee e : employees) {
@@ -85,11 +86,12 @@ public class EmployeeService {
             String position = e.getPosition();
             String dName = e.getDepartmentName();
             employeeDtos.add(new PresentEmployeeDto(id, fName, lName, position, dName, new ArrayList<ErrorDto>()));
+
         }
-        return employeeDtos;
+        return new EmployeeListDto(employeeDtos, new ArrayList<>());
     }
 
-    public List<PresentEmployeeDto> findEmployeesByLastName(String lastName) {
+    public EmployeeListDto findEmployeesByLastName(String lastName) {
 
         List<ErrorDto> errors = validateName.validate(lastName);
         List<Employee> employeeList = service.findEmployeeByLastname(lastName);
@@ -98,7 +100,7 @@ public class EmployeeService {
         if (employeeList.isEmpty()) {
             errors.add(new ErrorDto(ErrorCodes.ER407, "Name not found"));
             employeeDtos.add(new PresentEmployeeDto(0, "-", "-", "-", "-", new ArrayList<ErrorDto>()));
-            return employeeDtos;
+            return new EmployeeListDto(employeeDtos, errors);
         } else {
 
             for (Employee e : employeeList) {
@@ -109,7 +111,7 @@ public class EmployeeService {
                 String dName = e.getDepartmentName();
                 employeeDtos.add(new PresentEmployeeDto(id, fName, lName, position, dName, new ArrayList<ErrorDto>()));
             }
-            return employeeDtos;
+            return new EmployeeListDto(employeeDtos, errors);
         }
     }
     public Integer findWholeEmployeesCount(){
