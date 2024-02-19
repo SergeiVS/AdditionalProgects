@@ -1,5 +1,6 @@
 package companyPersonalManagement.Services;
 
+
 import companyPersonalManagement.dtos.errorsDto.ErrorCodes;
 import companyPersonalManagement.dtos.errorsDto.ErrorDto;
 import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
@@ -35,8 +36,8 @@ public class EmployeeService {
             Integer id = dto.getPersonalId();
             String fName = dto.getFirstName();
             String lName = dto.getLastName();
-            String dName = dto.getDepartmentName();
-            String position = dto.getPosition();
+            String dName = "-";
+            String position = "-";
             Employee e = repository.getEmployeesRepository().get(id);
             service.employeeLayOff(id);
             return new PresentEmployeeDto(id, fName, lName, position, dName, errors);
@@ -110,6 +111,9 @@ public class EmployeeService {
             }
             return employeeDtos;
         }
+    }
+    public Integer findWholeEmployeesCount(){
+        return service.wholePersonalCount();
     }
 
         ValidationInterface<String> validateName = new ValidationInterface<String>() {

@@ -14,8 +14,8 @@ import companyPersonalManagement.repositories.DepartmentRepository;
 import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 
 public class DepartmentService {
     private final DepartmentRepositoryService service;
