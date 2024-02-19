@@ -1,6 +1,7 @@
 package companyPersonalManagement.Services.utils;
 
 
+import companyPersonalManagement.dtos.responseDtos.EmployeeListDto;
 import companyPersonalManagement.dtos.responseDtos.PresentDepartmentDto;
 import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Employee;
@@ -30,9 +31,10 @@ public class PrintDtos {
         }
     }
 
-    public static void printEmployeesDtoList(List<PresentEmployeeDto> employees) {
+    public static void printEmployeesDtoList(EmployeeListDto employees) {
         int count = 0;
-        for (PresentEmployeeDto employee : employees) {
+        System.out.println(employees.getErrors());
+        for (PresentEmployeeDto employee : employees.getEmployees()) {
             System.out.println(++count + ".");
             System.out.println(employee.getFirstName() + " " + employee.getLastName());
             System.out.println("Position: " + employee.getPosition());

@@ -7,6 +7,7 @@ import companyPersonalManagement.Services.utils.UserInput;
 import companyPersonalManagement.dtos.requestDtos.DepartmentDto;
 import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
 import companyPersonalManagement.dtos.responseDtos.AddRemoveUnitDto;
+import companyPersonalManagement.dtos.responseDtos.EmployeeListDto;
 import companyPersonalManagement.dtos.responseDtos.PresentDepartmentDto;
 import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Employee;
@@ -26,8 +27,9 @@ public class UI {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
     }
-public void execute(){
-        while (true){
+
+    public void execute() {
+        while (true) {
             System.out.println("Task menu: ");
             System.out.println("1. Add new employee");
             System.out.println("2. Lay off employee");
@@ -44,50 +46,72 @@ public void execute(){
             System.out.println("13. Exit");
             int menuCode = UserInput.inputInt("Insert menu code 1 to 13");
             if (menuCode > 0 && menuCode <= 13) {
-                switch (menuCode){
-                    case 1:
-                        String fName = UserInput.inputString("Insert firstname");
-                        String lName = UserInput.inputString("Insert lastname");
-                        PresentEmployeeDto newEmployee = employeeService.addNewEmployee(new EmployeeDto(fName, lName));
-                        PrintDtos.printPresentEmployee(newEmployee);
+                try {
+                    switch (menuCode) {
+                        case 1:
+                            String fName = UserInput.inputString("Insert firstname");
+                            String lName = UserInput.inputString("Insert lastname");
+                            PresentEmployeeDto newEmployee = employeeService.addNewEmployee(new EmployeeDto(fName, lName));
+                            PrintDtos.printPresentEmployee(newEmployee);
 
-                    case 2:
-                        int idToLayOff = UserInput.inputInt("Insert employee id");
-                        PresentEmployeeDto employeeForLayOff = employeeService.findEmployeeById(idToLayOff);
-                        employeeForLayOff = employeeService.layOffEmployee(employeeForLayOff);
-                        PrintDtos.printPresentEmployee(employeeForLayOff);
-                    case 3:
-                        List<PresentEmployeeDto> employees = employeeService.findAllEmployees();
-                        PrintDtos.printEmployeesDtoList(employees);
-                    case 4:
-                        int idToFind = UserInput.inputInt("Insert needed id");
-                        PresentEmployeeDto employeeFound = employeeService.findEmployeeById(idToFind);
-                        PrintDtos.printPresentEmployee(employeeFound);
-                    case 5:
-                        String name = UserInput.inputString("Insert lastname");
-                        List<PresentEmployeeDto> employeesByName = employeeService.findEmployeesByLastName(name);
-                        PrintDtos.printEmployeesDtoList(employeesByName);
-                    case  6:
-                        int countOfEmployees = employeeService.findWholeEmployeesCount();
-                        System.out.println("In company are " + countOfEmployees + " employees.");
-                    case 7:
-                        String dName = UserInput.inputString("Insert new department name");
-                        AddRemoveUnitDto departmentDto = departmentService.addNewDepartment(new DepartmentDto(dName));
-                        System.out.println(departmentDto.toString());
-                    case 8:
-                        dName = UserInput.inputString("Insert new department name");
-                        departmentDto = departmentService.removeDepartment(new DepartmentDto(dName));
-                        System.out.println(departmentDto.toString());
-                    case 9:
-                        dName = UserInput.inputString("Insert new department name");
-                        PresentDepartmentDto department = departmentService.findDepartment(new DepartmentDto(dName));
-                        PrintDtos.printDepartment(department);
-                    case 10:
-
+                        case 2:
+                            int idToLayOff = UserInput.inputInt("Insert employee id");
+                            PresentEmployeeDto employeeForLayOff = employeeService.findEmployeeById(idToLayOff);
+                            employeeForLayOff = employeeService.layOffEmployee(employeeForLayOff);
+                            PrintDtos.printPresentEmployee(employeeForLayOff);
+                        case 3:
+                            List<PresentEmployeeDto> employees = employeeService.findAllEmployees();
+                            PrintDtos.printEmployeesDtoList(employees);
+                        case 4:
+                            int idToFind = UserInput.inputInt("Insert needed id");
+                            PresentEmployeeDto employeeFound = employeeService.findEmployeeById(idToFind);
+                            PrintDtos.printPresentEmployee(employeeFound);
+                        case 5:
+                            String name = UserInput.inputString("Insert lastname");
+                            List<PresentEmployeeDto> employeesByName = employeeService.findEmployeesByLastName(name);
+                            PrintDtos.printEmployeesDtoList(employeesByName);
+                        case 6:
+                            int countOfEmployees = employeeService.findWholeEmployeesCount();
+                            System.out.println("In company are " + countOfEmployees + " employees.");
+                        case 7:
+                            String dName = UserInput.inputString("Insert new department name");
+                            AddRemoveUnitDto departmentDto = departmentService.addNewDepartment(new DepartmentDto(dName));
+                            System.out.println(departmentDto.toString());
+                        case 8:
+                            dName = UserInput.inputString("Insert new department name");
+                            departmentDto = departmentService.removeDepartment(new DepartmentDto(dName));
+                            System.out.println(departmentDto.toString());
+                        case 9:
+                            dName = UserInput.inputString("Insert new department name");
+                            PresentDepartmentDto department = departmentService.findDepartment(new DepartmentDto(dName));
+                            PrintDtos.printDepartment(department);
+                        case 10:
+                            idToFind = UserInput.inputInt("Insert needed id");
+                            dName = UserInput.inputString("Insert new department name");
+                            department = departmentService.findDepartment(new DepartmentDto(dName));
+                            employeeFound = departmentService.addEmployeeToDep(department, idToFind);
+                            PrintDtos.printPresentEmployee(employeeFound);
+                        case 11:
+                            idToFind = UserInput.inputInt("Insert needed id");
+                            dName = UserInput.inputString("Insert new department name");
+                            department = departmentService.findDepartment(new DepartmentDto(dName));
+                            employeeFound = departmentService.removeEmployeeFromDep(department, idToFind);
+                            PrintDtos.printPresentEmployee(employeeFound);
+                        case 12:
+                            dName = UserInput.inputString("Insert new department name");
+                            department = departmentService.findDepartment(new DepartmentDto(dName));
+                            EmployeeListDto depEmployees = departmentService.findDepEmployees(department);
+                            PrintDtos.printEmployeesDtoList(depEmployees);
+                        case 13:
+                            return;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error! Please try again!");
+                    e.printStackTrace();
                 }
             }
         }
-}
+    }
 
 
 }

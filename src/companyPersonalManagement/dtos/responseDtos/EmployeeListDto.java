@@ -7,15 +7,15 @@ import java.util.List;
 
 public class EmployeeListDto {
 
-    List<Employee> employees;
-    List<ErrorDto> errors;
+   private final List<PresentEmployeeDto> employees;
+    private final List<ErrorDto> errors;
 
-    public EmployeeListDto(List<Employee> employees, List<ErrorDto> errors) {
+    public EmployeeListDto(List<PresentEmployeeDto> employees, List<ErrorDto> errors) {
         this.employees = employees;
         this.errors = errors;
     }
 
-    public List<Employee> getEmployees() {
+    public List<PresentEmployeeDto> getEmployees() {
         return employees;
     }
 

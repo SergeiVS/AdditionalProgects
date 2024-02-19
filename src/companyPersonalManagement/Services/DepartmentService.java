@@ -12,37 +12,42 @@ import companyPersonalManagement.entitys.Department;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.DepartmentRepository;
 import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
+import companyPersonalManagement.repositories.RepositoryServices.EmployeeRepositoryService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class DepartmentService {
     private final DepartmentRepositoryService service;
-    private final DepartmentRepository repository;
+    private final DepartmentRepository dRepository;
+    private final EmployeeRepositoryService eRepository;
 
-    public DepartmentService(DepartmentRepositoryService service, DepartmentRepository repository) {
+    public DepartmentService(DepartmentRepositoryService service, DepartmentRepository dRepository, EmployeeRepositoryService eRepository) {
         this.service = service;
-        this.repository = repository;
+        this.dRepository = dRepository;
+        this.eRepository = eRepository;
     }
 
-    public PresentDepartmentDto findDepartment(DepartmentDto dto){
+    public PresentDepartmentDto findDepartment(DepartmentDto dto) {
         List<ErrorDto> errors = presentDepNameValidation.validate(dto);
-        if (errors.isEmpty()){
+        if (errors.isEmpty()) {
             String name = dto.getDepartmentName();
-            Department department = repository.getDepartmentsRepository().get(name);
+            Department department = dRepository.getDepartmentsRepository().get(name);
             List<Employee> employees = department.getDepartmentPersonal();
             return new PresentDepartmentDto(name, employees, errors);
-        }else {
+        } else {
             return new PresentDepartmentDto("-", new ArrayList<>(), errors);
         }
     }
+
     public AddRemoveUnitDto removeDepartment(DepartmentDto dto) {
         List<ErrorDto> errors = presentDepNameValidation.validate(dto);
 
         if (errors.isEmpty()) {
             String name = dto.getDepartmentName();
-            repository.getDepartmentsRepository().remove(name);
+            dRepository.getDepartmentsRepository().remove(name);
             return new AddRemoveUnitDto("Department " + name + " successful removed.", errors);
         } else {
             return new AddRemoveUnitDto("Department did not removed.", errors);
@@ -62,43 +67,54 @@ public class DepartmentService {
         }
     }
 
-    public PresentEmployeeDto addEmployeeToDep (PresentDepartmentDto dDto, Employee employee){
+    public PresentEmployeeDto addEmployeeToDep(PresentDepartmentDto dDto, Integer id) {
         List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
-        if (errors.isEmpty()) {
+        Employee employee = eRepository.findEmployeeById(id);
+        if (errors.isEmpty() && employee != null) {
             String dName = dDto.getDepartmentName();
-            Department department = repository.getDepartmentsRepository().get(dName);
+            Department department = dRepository.getDepartmentsRepository().get(dName);
             employee.setDepartmentName(dName);
             department.getDepartmentPersonal().add(employee);
-            Integer id = employee.getPersonalId();
             return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.getDepartmentName(), errors);
-        }else {
-            return new PresentEmployeeDto(0, "-","-","-","-",errors);
-        }
-    }
-    public PresentEmployeeDto removeEmployeeFromDep (PresentDepartmentDto dDto, Employee employee){
-        List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
-        if (errors.isEmpty()) {
-            String dName = dDto.getDepartmentName();
-            Department department = repository.getDepartmentsRepository().get(dName);
-            employee.setDepartmentName(dName);
-            department.getDepartmentPersonal().remove(employee);
-            Integer id = employee.getPersonalId();
-            return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
-        }else {
-            return new PresentEmployeeDto(0,"-","-","-","-",errors);
-        }
-    }
-    public EmployeeListDto findDepEmployees(DepartmentDto dto){
-        List<ErrorDto> errors = presentDepNameValidation.validate(dto);
-        if(errors.isEmpty()){
-            Department department = repository.getDepartmentsRepository().get(dto.getDepartmentName());
-            List<Employee> employees = department.getDepartmentPersonal();
-            return new EmployeeListDto(employees, errors);
-        }else {
-            return new EmployeeListDto(new ArrayList<>(), errors);
+        } else {
+            return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
         }
     }
 
+    public PresentEmployeeDto removeEmployeeFromDep(PresentDepartmentDto dDto, Integer id) {
+
+        List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
+        Employee employee = eRepository.findEmployeeById(id);
+
+        if (errors.isEmpty() && employee != null) {
+
+            String dName = dDto.getDepartmentName();
+            Department department = dRepository.getDepartmentsRepository().get(dName);
+            employee.setDepartmentName("not defined");
+            department.getDepartmentPersonal().remove(employee);
+            return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
+        } else {
+            return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
+        }
+    }
+
+    public EmployeeListDto findDepEmployees(DepartmentDto dto) {
+
+        List<ErrorDto> errors = presentDepNameValidation.validate(dto);
+
+        if (errors.isEmpty()) {
+
+            Department department = dRepository.getDepartmentsRepository().get(dto.getDepartmentName());
+            List<Employee> employees = department.getDepartmentPersonal();
+
+            List<PresentEmployeeDto> employeeDtos = employees.stream()
+                    .map(e -> new PresentEmployeeDto(e.getPersonalId(), e.getFirstName(), e.getLastName(), e.getPosition(), e.getDepartmentName(), new ArrayList<>()))
+                    .toList();
+            return new EmployeeListDto(employeeDtos, errors);
+        } else {
+            return new EmployeeListDto(new ArrayList<>(), errors);
+        }
+    }
 
 
     ValidationInterface<DepartmentDto> newDepValidation = new ValidationInterface<DepartmentDto>() {
@@ -120,7 +136,7 @@ public class DepartmentService {
                     return error;
                 }
             }
-            if (repository.getDepartmentsRepository().containsKey(name)) {
+            if (dRepository.getDepartmentsRepository().containsKey(name)) {
                 error.add(new ErrorDto(ErrorCodes.ER403, "Name already exist"));
                 return error;
             }
@@ -132,7 +148,6 @@ public class DepartmentService {
             return error;
         }
     };
-
 
 
     ValidationInterface<DepartmentDto> presentDepNameValidation = new ValidationInterface<DepartmentDto>() {
@@ -155,7 +170,7 @@ public class DepartmentService {
                 }
             }
 
-            if (repository.getDepartmentsRepository().containsKey(name)) {
+            if (dRepository.getDepartmentsRepository().containsKey(name)) {
                 return errors;
             } else {
                 return errors;
