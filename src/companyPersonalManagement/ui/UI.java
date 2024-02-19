@@ -78,6 +78,11 @@ public void execute(){
                         dName = UserInput.inputString("Insert new department name");
                         departmentDto = departmentService.removeDepartment(new DepartmentDto(dName));
                         System.out.println(departmentDto.toString());
+                    case 9:
+                        dName = UserInput.inputString("Insert new department name");
+                        PresentDepartmentDto department = departmentService.findDepartment(new DepartmentDto(dName));
+                        PrintDtos.printDepartment(department);
+                    case 10:
 
                 }
             }
