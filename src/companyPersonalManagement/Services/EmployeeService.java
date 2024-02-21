@@ -41,9 +41,10 @@ public class EmployeeService {
             String lName = dto.getLastName();
             String dName = "-";
             String position = "-";
-            Employee e = repository.getEmployeesRepository().get(id);
-            service.employeeLayOff(id);
-            return new PresentEmployeeDto(id, fName, lName, position, dName, errors);
+
+            Employee e = service.employeeLayOff(id);
+
+            return new PresentEmployeeDto(e.getPersonalId(), e.getFirstName(), e.getFirstName(), e.getPosition(), e.getDepartmentName(), errors);
         } else {
             return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
         }
