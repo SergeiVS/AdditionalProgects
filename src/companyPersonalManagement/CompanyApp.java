@@ -13,9 +13,9 @@ public class CompanyApp {
     public static void main(String[] args) {
 
         EmployeeRepository eRepository = new EmployeeRepository();
-        EmployeeRepositoryService eRepoService = new EmployeeRepositoryService();
+        EmployeeRepositoryService eRepoService = new EmployeeRepositoryService(eRepository);
         DepartmentRepository dRepository = new DepartmentRepository();
-        DepartmentRepositoryService dRepoService = new DepartmentRepositoryService();
+        DepartmentRepositoryService dRepoService = new DepartmentRepositoryService(dRepository);
         DepartmentService dService = new DepartmentService(dRepoService, dRepository, eRepoService);
         EmployeeService eService = new EmployeeService();
 

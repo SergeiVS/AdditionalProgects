@@ -47,55 +47,70 @@ public class Ui {
                             String lName = UserInput.inputString("Insert lastname");
                             PresentEmployeeDto newEmployee = employeeService.addNewEmployee(new EmployeeDto(fName, lName));
                             PrintDtos.printPresentEmployee(newEmployee);
+                            break;
 
                         case 2:
                             int idToLayOff = UserInput.inputInt("Insert employee id");
                             PresentEmployeeDto employeeForLayOff = employeeService.findEmployeeById(idToLayOff);
                             employeeForLayOff = employeeService.layOffEmployee(employeeForLayOff);
                             PrintDtos.printPresentEmployee(employeeForLayOff);
+                            break;
+
                         case 3:
                             EmployeeListDto employees = employeeService.findAllEmployees();
                             PrintDtos.printEmployeesDtoList(employees);
+                            break;
+
                         case 4:
                             int idToFind = UserInput.inputInt("Insert needed id");
                             PresentEmployeeDto employeeFound = employeeService.findEmployeeById(idToFind);
                             PrintDtos.printPresentEmployee(employeeFound);
+                            break;
+
                         case 5:
                             String name = UserInput.inputString("Insert lastname");
                             EmployeeListDto employeesByName = employeeService.findEmployeesByLastName(name);
                             PrintDtos.printEmployeesDtoList(employeesByName);
+                            break;
                         case 6:
                             int countOfEmployees = employeeService.findWholeEmployeesCount();
                             System.out.println("In company are " + countOfEmployees + " employees.");
+                            break;
                         case 7:
                             String dName = UserInput.inputString("Insert new department name");
                             AddRemoveUnitDto departmentDto = departmentService.addNewDepartment(new DepartmentDto(dName));
                             System.out.println(departmentDto.toString());
+                            break;
                         case 8:
                             dName = UserInput.inputString("Insert new department name");
                             departmentDto = departmentService.removeDepartment(new DepartmentDto(dName));
                             System.out.println(departmentDto.toString());
+                            break;
                         case 9:
                             dName = UserInput.inputString("Insert new department name");
                             PresentDepartmentDto department = departmentService.findDepartment(new DepartmentDto(dName));
                             PrintDtos.printDepartment(department);
+                            break;
                         case 10:
                             idToFind = UserInput.inputInt("Insert needed id");
                             dName = UserInput.inputString("Insert new department name");
                             department = departmentService.findDepartment(new DepartmentDto(dName));
                             employeeFound = departmentService.addEmployeeToDep(department, idToFind);
                             PrintDtos.printPresentEmployee(employeeFound);
+                            break;
                         case 11:
                             idToFind = UserInput.inputInt("Insert needed id");
                             dName = UserInput.inputString("Insert new department name");
                             department = departmentService.findDepartment(new DepartmentDto(dName));
                             employeeFound = departmentService.removeEmployeeFromDep(department, idToFind);
                             PrintDtos.printPresentEmployee(employeeFound);
+                            break;
                         case 12:
                             dName = UserInput.inputString("Insert new department name");
                             department = departmentService.findDepartment(new DepartmentDto(dName));
                             EmployeeListDto depEmployees = departmentService.findDepEmployees(department);
                             PrintDtos.printEmployeesDtoList(depEmployees);
+                            break;
                         case 13:
                             return;
                     }

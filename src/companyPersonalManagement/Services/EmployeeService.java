@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
-    private final EmployeeRepositoryService service = new EmployeeRepositoryService();
+    private final EmployeeRepositoryService service = new EmployeeRepositoryService(eRepository);
     private final EmployeeRepository repository = new EmployeeRepository();
 
 

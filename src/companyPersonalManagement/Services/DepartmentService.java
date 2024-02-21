@@ -57,7 +57,6 @@ public class DepartmentService {
 
         List<ErrorDto> errors = newDepValidation.validate(dto);
 
-        String name;
         if (errors.isEmpty()) {
             service.addNewDepartment(dto);
             return new AddRemoveUnitDto("Department was added successful", errors);
@@ -67,15 +66,20 @@ public class DepartmentService {
     }
 
     public PresentEmployeeDto addEmployeeToDep(PresentDepartmentDto dDto, Integer id) {
+
         List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
         Employee employee = eRepositoryService.findEmployeeById(id);
+
         if (errors.isEmpty() && employee != null) {
             String dName = dDto.getDepartmentName();
             Department department = dRepository.getDepartmentsRepository().get(dName);
             employee.setDepartmentName(dName);
             department.getDepartmentPersonal().add(employee);
+
             return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), employee.getDepartmentName(), errors);
+
         } else {
+
             return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
         }
     }
@@ -91,8 +95,11 @@ public class DepartmentService {
             Department department = dRepository.getDepartmentsRepository().get(dName);
             employee.setDepartmentName("not defined");
             department.getDepartmentPersonal().remove(employee);
+
             return new PresentEmployeeDto(id, employee.getFirstName(), employee.getLastName(), employee.getPosition(), "not defined", errors);
+
         } else {
+
             return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
         }
     }
@@ -110,7 +117,9 @@ public class DepartmentService {
                     .map(e -> new PresentEmployeeDto(e.getPersonalId(), e.getFirstName(), e.getLastName(), e.getPosition(), e.getDepartmentName(), new ArrayList<>()))
                     .toList();
             return new EmployeeListDto(employeeDtos, errors);
+
         } else {
+
             return new EmployeeListDto(new ArrayList<>(), errors);
         }
     }
@@ -119,6 +128,7 @@ public class DepartmentService {
     ValidationInterface<DepartmentDto> newDepValidation = new ValidationInterface<DepartmentDto>() {
         @Override
         public List<ErrorDto> validate(DepartmentDto request) {
+
             List<ErrorDto> error = new ArrayList<>();
             DepartmentDto dto;
             String name;
@@ -128,19 +138,24 @@ public class DepartmentService {
                 return error;
             } else {
                 try {
-                    dto = (DepartmentDto) request;
-                    name = dto.getDepartmentName();
+
+                    name = request.getDepartmentName();
+
                 } catch (Exception e) {
+
                     error.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
                     return error;
                 }
             }
+
             if (dRepository.getDepartmentsRepository().containsKey(name)) {
+
                 error.add(new ErrorDto(ErrorCodes.ER403, "Name already exist"));
                 return error;
             }
 
             if (name.length() < 3 || name.length() > 20) {
+
                 error.add(new ErrorDto(ErrorCodes.ER405, "Name length must be between 3 and 20 characters"));
                 return error;
             }
@@ -149,20 +164,24 @@ public class DepartmentService {
     };
 
 
-    ValidationInterface<DepartmentDto> presentDepNameValidation = new ValidationInterface<DepartmentDto>() {
+    ValidationInterface<DepartmentDto> presentDepNameValidation = new ValidationInterface<>() {
         @Override
         public List<ErrorDto> validate(DepartmentDto request) {
+
             List<ErrorDto> errors = new ArrayList<>();
             DepartmentDto dto;
             String name;
 
             if (request == null) {
+
                 errors.add(new ErrorDto(ErrorCodes.ER401, "Request should not be empty"));
                 return errors;
+
             } else {
+
                 try {
-                    dto = (DepartmentDto) request;
-                    name = dto.getDepartmentName();
+
+                    name = request.getDepartmentName();
                 } catch (Exception e) {
                     errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
                     return errors;
@@ -170,8 +189,11 @@ public class DepartmentService {
             }
 
             if (dRepository.getDepartmentsRepository().containsKey(name)) {
+
                 return errors;
+
             } else {
+
                 return errors;
             }
         }

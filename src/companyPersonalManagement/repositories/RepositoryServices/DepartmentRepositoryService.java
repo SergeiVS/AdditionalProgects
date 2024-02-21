@@ -6,12 +6,15 @@ import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.DepartmentRepository;
 import companyPersonalManagement.repositories.DepartmentRepositoryInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentRepositoryService implements DepartmentRepositoryInterface {
 
-    private final DepartmentRepository dRepository = new DepartmentRepository();
+    private final DepartmentRepository dRepository ;
+
+    public DepartmentRepositoryService(DepartmentRepository dRepository) {
+        this.dRepository = dRepository;
+    }
 
     @Override
     public void addNewDepartment(DepartmentDto DepartmentDto) {

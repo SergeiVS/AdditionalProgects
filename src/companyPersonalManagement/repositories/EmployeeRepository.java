@@ -15,7 +15,7 @@ public class EmployeeRepository {
     }
 
     public Integer idGenerator() {
-        return counter++;
+        return ++counter;
     }
 
     public Map<Integer, Employee> getEmployeesRepository() {

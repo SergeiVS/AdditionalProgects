@@ -1,7 +1,6 @@
 package companyPersonalManagement.repositories.RepositoryServices;
 
 import companyPersonalManagement.dtos.requestDtos.EmployeeDto;
-import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
 import companyPersonalManagement.entitys.Employee;
 import companyPersonalManagement.repositories.EmployeeRepository;
 import companyPersonalManagement.repositories.EmployeeRepositoryInterface;
@@ -11,7 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
-    private final EmployeeRepository eRepository = new EmployeeRepository();
+    private final EmployeeRepository eRepository;
+
+    public EmployeeRepositoryService(EmployeeRepository eRepository) {
+        this.eRepository = eRepository;
+    }
 
     @Override
     public Employee addNewEmployee(EmployeeDto employeeDto) {
