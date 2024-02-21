@@ -1,5 +1,12 @@
+import companyPersonalManagement.Services.DepartmentService;
+import companyPersonalManagement.Services.EmployeeService;
+import companyPersonalManagement.repositories.DepartmentRepository;
+import companyPersonalManagement.repositories.EmployeeRepository;
+import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
+import companyPersonalManagement.repositories.RepositoryServices.EmployeeRepositoryService;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+
+
+
 }

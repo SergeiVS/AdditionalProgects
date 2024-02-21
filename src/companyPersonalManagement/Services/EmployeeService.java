@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
-    EmployeeRepositoryService service = new EmployeeRepositoryService();
-    EmployeeRepository repository = new EmployeeRepository();
+    private final EmployeeRepositoryService service = new EmployeeRepositoryService();
+    private final EmployeeRepository repository = new EmployeeRepository();
+
+
 
     public PresentEmployeeDto addNewEmployee(EmployeeDto dto) {
         List<ErrorDto> errors = employeeDtoValidate.validate(dto);
@@ -114,86 +116,87 @@ public class EmployeeService {
             return new EmployeeListDto(employeeDtos, errors);
         }
     }
-    public Integer findWholeEmployeesCount(){
+
+    public Integer findWholeEmployeesCount() {
         return service.wholePersonalCount();
     }
 
-        ValidationInterface<String> validateName = new ValidationInterface<String>() {
-            @Override
-            public List<ErrorDto> validate(String request) {
-                List<ErrorDto> errors = new ArrayList<>();
+    ValidationInterface<String> validateName = new ValidationInterface<String>() {
+        @Override
+        public List<ErrorDto> validate(String request) {
+            List<ErrorDto> errors = new ArrayList<>();
 
-                if (request == null) {
-                    errors.add(new ErrorDto(ErrorCodes.ER401, "Lastname field can not be empty"));
-                    return errors;
-                }
+            if (request == null) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "Lastname field can not be empty"));
                 return errors;
             }
-        };
-
-            ValidationInterface<Integer> validateId = new ValidationInterface<Integer>() {
-                @Override
-                public List<ErrorDto> validate(Integer request) {
-                    List<ErrorDto> errors = new ArrayList<>();
-                    if (request <= 0) {
-                        errors.add(new ErrorDto(ErrorCodes.ER406, "Id not valid"));
-                        return errors;
-                    }
-                    if (!repository.getEmployeesRepository().containsKey(request)) {
-                        errors.add(new ErrorDto(ErrorCodes.ER406, "Id not valid"));
-                        return errors;
-                    }
-                    return errors;
-                }
-            };
-
-            ValidationInterface<EmployeeDto> employeeDtoValidate = new ValidationInterface<EmployeeDto>() {
-                @Override
-                public List<ErrorDto> validate(EmployeeDto request) {
-                    List<ErrorDto> errors = new ArrayList<>();
-
-                    if (request == null) {
-                        errors.add(new ErrorDto(ErrorCodes.ER401, "First or lastname field can not be empty"));
-                        return errors;
-                    } else {
-                        try {
-                            String fName = request.getFirstName();
-                            String lastName = request.getLastName();
-                        } catch (Exception e) {
-                            errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
-                            return errors;
-                        }
-                    }
-                    if (request.getLastName().isEmpty() || request.getFirstName().isEmpty()) {
-                        errors.add(new ErrorDto(ErrorCodes.ER401, "First or lastname field can not be empty"));
-                        return errors;
-
-                    }
-                    return errors;
-                }
-            };
-            ValidationInterface<PresentEmployeeDto> presentEmployeeDtoValidate = new ValidationInterface<PresentEmployeeDto>() {
-                @Override
-                public List<ErrorDto> validate(PresentEmployeeDto request) {
-                    List<ErrorDto> errors = new ArrayList<>();
-
-                    if (request == null) {
-                        errors.add(new ErrorDto(ErrorCodes.ER401, "Request can not be empty"));
-                        return errors;
-                    } else {
-                        try {
-                            Integer id = request.getPersonalId();
-
-                        } catch (Exception e) {
-                            errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
-                            return errors;
-                        }
-                    }
-                    if (request.getLastName().isEmpty() || request.getFirstName().isEmpty() || request.getPersonalId() == 0) {
-                        errors.add(new ErrorDto(ErrorCodes.ER401, "Fields of request can not be empty"));
-                        return errors;
-                    }
-                    return errors;
-                }
-            };
+            return errors;
         }
+    };
+
+    ValidationInterface<Integer> validateId = new ValidationInterface<Integer>() {
+        @Override
+        public List<ErrorDto> validate(Integer request) {
+            List<ErrorDto> errors = new ArrayList<>();
+            if (request <= 0) {
+                errors.add(new ErrorDto(ErrorCodes.ER406, "Id not valid"));
+                return errors;
+            }
+            if (!repository.getEmployeesRepository().containsKey(request)) {
+                errors.add(new ErrorDto(ErrorCodes.ER406, "Id not valid"));
+                return errors;
+            }
+            return errors;
+        }
+    };
+
+    ValidationInterface<EmployeeDto> employeeDtoValidate = new ValidationInterface<EmployeeDto>() {
+        @Override
+        public List<ErrorDto> validate(EmployeeDto request) {
+            List<ErrorDto> errors = new ArrayList<>();
+
+            if (request == null) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "First or lastname field can not be empty"));
+                return errors;
+            } else {
+                try {
+                    String fName = request.getFirstName();
+                    String lastName = request.getLastName();
+                } catch (Exception e) {
+                    errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
+                    return errors;
+                }
+            }
+            if (request.getLastName().isEmpty() || request.getFirstName().isEmpty()) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "First or lastname field can not be empty"));
+                return errors;
+
+            }
+            return errors;
+        }
+    };
+    ValidationInterface<PresentEmployeeDto> presentEmployeeDtoValidate = new ValidationInterface<PresentEmployeeDto>() {
+        @Override
+        public List<ErrorDto> validate(PresentEmployeeDto request) {
+            List<ErrorDto> errors = new ArrayList<>();
+
+            if (request == null) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "Request can not be empty"));
+                return errors;
+            } else {
+                try {
+                    Integer id = request.getPersonalId();
+
+                } catch (Exception e) {
+                    errors.add(new ErrorDto(ErrorCodes.ER402, "Request in wrong format"));
+                    return errors;
+                }
+            }
+            if (request.getLastName().isEmpty() || request.getFirstName().isEmpty() || request.getPersonalId() == 0) {
+                errors.add(new ErrorDto(ErrorCodes.ER401, "Fields of request can not be empty"));
+                return errors;
+            }
+            return errors;
+        }
+    };
+}

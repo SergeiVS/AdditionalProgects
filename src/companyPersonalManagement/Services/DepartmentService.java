@@ -16,18 +16,17 @@ import companyPersonalManagement.repositories.RepositoryServices.EmployeeReposit
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class DepartmentService {
     private final DepartmentRepositoryService service;
     private final DepartmentRepository dRepository;
-    private final EmployeeRepositoryService eRepository;
+    private final EmployeeRepositoryService eRepositoryService;
 
-    public DepartmentService(DepartmentRepositoryService service, DepartmentRepository dRepository, EmployeeRepositoryService eRepository) {
+    public DepartmentService(DepartmentRepositoryService service, DepartmentRepository dRepository, EmployeeRepositoryService eRepositoryService) {
         this.service = service;
         this.dRepository = dRepository;
-        this.eRepository = eRepository;
+        this.eRepositoryService = eRepositoryService;
     }
 
     public PresentDepartmentDto findDepartment(DepartmentDto dto) {
@@ -69,7 +68,7 @@ public class DepartmentService {
 
     public PresentEmployeeDto addEmployeeToDep(PresentDepartmentDto dDto, Integer id) {
         List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
-        Employee employee = eRepository.findEmployeeById(id);
+        Employee employee = eRepositoryService.findEmployeeById(id);
         if (errors.isEmpty() && employee != null) {
             String dName = dDto.getDepartmentName();
             Department department = dRepository.getDepartmentsRepository().get(dName);
@@ -84,7 +83,7 @@ public class DepartmentService {
     public PresentEmployeeDto removeEmployeeFromDep(PresentDepartmentDto dDto, Integer id) {
 
         List<ErrorDto> errors = presentDepNameValidation.validate(dDto);
-        Employee employee = eRepository.findEmployeeById(id);
+        Employee employee = eRepositoryService.findEmployeeById(id);
 
         if (errors.isEmpty() && employee != null) {
 

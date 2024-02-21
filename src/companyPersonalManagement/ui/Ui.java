@@ -10,20 +10,14 @@ import companyPersonalManagement.dtos.responseDtos.AddRemoveUnitDto;
 import companyPersonalManagement.dtos.responseDtos.EmployeeListDto;
 import companyPersonalManagement.dtos.responseDtos.PresentDepartmentDto;
 import companyPersonalManagement.dtos.responseDtos.PresentEmployeeDto;
-import companyPersonalManagement.entitys.Employee;
-import companyPersonalManagement.repositories.EmployeeRepository;
-import companyPersonalManagement.repositories.RepositoryServices.DepartmentRepositoryService;
 
-import java.util.List;
-import java.util.Scanner;
-
-public class UI {
+public class Ui {
     private final DepartmentService departmentService;
 
     private final EmployeeService employeeService;
 
 
-    public UI(DepartmentService departmentService, EmployeeService employeeService) {
+    public Ui(DepartmentService departmentService, EmployeeService employeeService) {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
     }
