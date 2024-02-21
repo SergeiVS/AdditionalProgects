@@ -17,7 +17,7 @@ public class CompanyApp {
         DepartmentRepository dRepository = new DepartmentRepository();
         DepartmentRepositoryService dRepoService = new DepartmentRepositoryService(dRepository);
         DepartmentService dService = new DepartmentService(dRepoService, dRepository, eRepoService);
-        EmployeeService eService = new EmployeeService();
+        EmployeeService eService = new EmployeeService(eRepoService, eRepository);
 
         Ui ui = new Ui(dService, eService);
         ui.execute();

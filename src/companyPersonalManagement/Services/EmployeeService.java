@@ -14,9 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
-    private final EmployeeRepositoryService service = new EmployeeRepositoryService(eRepository);
-    private final EmployeeRepository repository = new EmployeeRepository();
+    private final EmployeeRepositoryService service;
+    private final EmployeeRepository repository;
 
+    public EmployeeService(EmployeeRepositoryService service, EmployeeRepository repository) {
+        this.service = service;
+        this.repository = repository;
+    }
 
 
     public PresentEmployeeDto addNewEmployee(EmployeeDto dto) {
