@@ -23,7 +23,7 @@ public class EmployeeRepositoryService  implements EmployeeRepositoryInterface {
         String lastName = employeeDto.getLastName();
         String firstName = employeeDto.getFirstName();
 
-        Employee employee = new Employee(id, lastName, firstName);
+        Employee employee = new Employee(id, firstName, lastName);
         eRepository.getEmployeesRepository().put(id, employee);
         return employee;
     }

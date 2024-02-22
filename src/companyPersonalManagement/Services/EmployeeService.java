@@ -48,7 +48,7 @@ public class EmployeeService {
 
             Employee e = service.employeeLayOff(id);
 
-            return new PresentEmployeeDto(e.getPersonalId(), e.getFirstName(), e.getFirstName(), e.getPosition(), e.getDepartmentName(), errors);
+            return new PresentEmployeeDto(e.getPersonalId(), e.getFirstName(), e.getLastName(), e.getPosition(), e.getDepartmentName(), errors);
         } else {
             return new PresentEmployeeDto(0, "-", "-", "-", "-", errors);
         }
